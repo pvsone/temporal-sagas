@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "comma"
+name = "temporal-sagas"
 version = "0.1.0"
 description = ""
 authors = ["Patrick Rachford <prachford@icloud.com>"]
@@ -7,11 +7,11 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-ruff = "^0.0.246"
-flask = {extras = ["async"], version = "^2.2.3"}
+ruff = "^0.3.5"
+flask = {extras = ["async"], version = "^3.0.3"}
 
 [tool.poetry.group.dev.dependencies]
-temporalio = "^1.1.0"
+temporalio = "^1.5.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -20,7 +20,6 @@ build-backend = "poetry.core.masonry.api"
 [tool.poe.tasks]
 format = [{cmd = "ruff check --fix ."}]
 lint = [{cmd = "ruff check ./*.py"}]
-
 
 [tool.ruff]
 select = ["E", "F"]

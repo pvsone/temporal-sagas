@@ -1,16 +1,7 @@
 import asyncio
-from dataclasses import dataclass
 
+from common import BookVacationInput
 from temporalio import activity
-
-
-@dataclass
-class BookVacationInput:
-    book_user_id: str
-    book_car_id: str
-    book_hotel_id: str
-    book_flight_id: str
-    attempts: int
 
 
 @activity.defn
@@ -61,7 +52,7 @@ async def book_flight(input: BookVacationInput) -> str:
         raise Exception("Invalid flight booking, rolling back!")
 
     print(f"Booking flight: {input.book_flight_id}")
-    return f"Booking flight: {input.book_flight_id}"
+    return f"Booked flight: {input.book_flight_id}"
 
 
 @activity.defn

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Temporal Book a Vacation</title>
+    <title>Temporal Trip Booking</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
@@ -43,10 +43,12 @@
 
       input[type="text"] {
         font-size: 16px;
-        padding: 10px;
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-bottom: 10px;
         border: 2px solid #dddddd;
         border-radius: 4px;
-        width: 100%;
+        width: 98%;
         margin-bottom: 20px;
       }
 
@@ -58,7 +60,9 @@
         border: none;
         border-radius: 4px;
         padding: 10px;
-        width: 100%;
+        width: 50%;
+        display: block;
+        margin: 0 auto;
         cursor: pointer;
         transition: background-color 0.3s ease;
       }
@@ -100,10 +104,7 @@
     </style>
   </head>
   <body>
-    <h1>Temporal Book a Vacation</h1>
-    <h2>GitHub: <a href="https://github.com/temporalio">github.com/temporalio</a></h2>
-    <h2>Docs: <a href="https://docs.temporal.io">docs.temporal.io</a></h2>
-    <p>Eliminate complex error or retry logic, avoid callbacks, and ensure that every workflow you start, completes. Temporal delivers durable execution for your services and applications.</p>
+    <h1>Temporal Trip Booking</h1>
     <form method="post" action="/book">
       <label for="name">Attempts:</label>
       <input
@@ -112,16 +113,16 @@
         id="attempts"
         value="1"
         required
-        placeholder="Your Temporal User"
+        placeholder="1"
       /><br />      
       <label for="name">Name:</label>
       <input
         type="text"
         name="name"
         id="name"
-        value="Your Temporal User"
+        value="Alice Jones"
         required
-        placeholder="Your Temporal User"
+        placeholder="Alice Jones"
       /><br />
     <form method="post" action="/book">
       <label for="car">Car:</label>
@@ -154,7 +155,7 @@
         placeholder="Alaska Airlines 123"
       /><br />
 
-      <input type="submit" value="Book" />
+      <input type="submit" value="Book Trip" />
     </form>
 
     {% if cancelled %}

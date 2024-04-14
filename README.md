@@ -19,7 +19,7 @@ Prerequisites:
 With this repository cloned, run the following at the root of the directory:
 
 ```bash
-poetry install
+poetry install --no-root
 ```
 That loads all required dependencies.
 
@@ -29,12 +29,6 @@ Then run the worker and workflow.
 poetry run python run_worker.py
 poetry run python run_workflow.py
 ```
-
-![](static/webui_success.png)
-![](static/success.gif)
-
-![](stat/../static/webui_failure.png)
-![](static/failure.gif)
 
 ### Demo: Happy Path
 Enter your booking information in the Flask app <http://127.0.0.1:5000>, then see the tasks in the Web UI at <http://localhost:8233/>.

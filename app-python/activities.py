@@ -15,12 +15,9 @@ class BookVacationInput:
 
 @activity.defn
 async def book_car(input: BookVacationInput) -> str:
-    await asyncio.sleep(3)
+    await asyncio.sleep(2)
     if activity.info().attempt < input.attempts:
-        activity.heartbeat(
-            f"Invoking activity, attempt number {activity.info().attempt}"
-        )
-        await asyncio.sleep(3)
+        await asyncio.sleep(2)
         raise RuntimeError("Car service is down")
     
     if "invalid" in input.book_car_id:
@@ -32,12 +29,9 @@ async def book_car(input: BookVacationInput) -> str:
 
 @activity.defn
 async def book_hotel(input: BookVacationInput) -> str:
-    await asyncio.sleep(3)
+    await asyncio.sleep(2)
     if activity.info().attempt < input.attempts:
-        activity.heartbeat(
-            f"Invoking activity, attempt number {activity.info().attempt}"
-        )
-        await asyncio.sleep(3)
+        await asyncio.sleep(2)
         raise RuntimeError("Hotel service is down")
     
     if "invalid" in input.book_hotel_id:
@@ -51,9 +45,6 @@ async def book_hotel(input: BookVacationInput) -> str:
 async def book_flight(input: BookVacationInput) -> str:
     await asyncio.sleep(3)
     if activity.info().attempt < input.attempts:
-        activity.heartbeat(
-            f"Invoking activity, attempt number {activity.info().attempt}"
-        )
         await asyncio.sleep(3)
         raise RuntimeError("Flight service is down")
     

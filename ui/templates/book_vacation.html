@@ -106,15 +106,6 @@
   <body>
     <h1>Temporal Trip Booking</h1>
     <form method="post" action="/book">
-      <label for="name">Attempts:</label>
-      <input
-        type="text"
-        name="attempts"
-        id="attempts"
-        value="1"
-        required
-        placeholder="1"
-      /><br />      
       <label for="name">Name:</label>
       <input
         type="text"
@@ -124,7 +115,7 @@
         required
         placeholder="Alice Jones"
       /><br />
-    <form method="post" action="/book">
+
       <label for="car">Car:</label>
       <input
         type="text"
@@ -161,9 +152,6 @@
     {% if cancelled %}
     <div class="canceled">
       <h2>Booking Canceled</h2>
-      <p>Undoing Car</p>
-      <p>Undoing Hotel</p>
-      <p>Undoing Flight</p>
     </div>
     {% endif %} {% if result %}
     <div class="result">

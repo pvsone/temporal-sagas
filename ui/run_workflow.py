@@ -11,12 +11,8 @@ class BookVacationInput:
     book_car_id: str
     book_hotel_id: str
     book_flight_id: str
-    attempts: int
 
 app = Flask(__name__)
-
-# Set to more than 1 to show activity retries due to service down
-ATTEMPTS = 1
 
 
 @app.route("/")
@@ -27,13 +23,11 @@ async def display_form():
 @app.route("/book", methods=["POST"])
 async def book_vacation():
     user_id = f'{request.form.get("name").replace(" ", "-").lower()}-{str(uuid.uuid4().int)[:6]}'
-    attempts = request.form.get("attempts")
     car = request.form.get("car")
     hotel = request.form.get("hotel")
     flight = request.form.get("flight")
 
     input = BookVacationInput(
-        attempts=int(attempts),
         book_user_id=user_id,
         book_car_id=car,
         book_hotel_id=hotel,
@@ -48,7 +42,7 @@ async def book_vacation():
         id=user_id,
         task_queue="saga-task-queue",
     )
-    if result == "Voyage cancelled":
+    if result == "Booking cancelled":
         return render_template("book_vacation.html", cancelled=True)
 
     else:

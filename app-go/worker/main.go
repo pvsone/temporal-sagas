@@ -39,6 +39,9 @@ func main() {
 	w.RegisterActivity(activities.BookCar)
 	w.RegisterActivity(activities.BookHotel)
 	w.RegisterActivity(activities.BookFlight)
+	w.RegisterActivity(activities.UndoBookCar)
+	w.RegisterActivity(activities.UndoBookHotel)
+	w.RegisterActivity(activities.UndoBookFlight)
 
 	err = w.Run(worker.InterruptCh())
 	if err != nil {

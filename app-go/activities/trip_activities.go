@@ -35,7 +35,7 @@ func BookHotel(ctx context.Context, hotelId string) (string, error) {
 
 	if containsIgnoreCase(hotelId, "buggy") {
 		// a logical bug in the code
-		error := false
+		error := true
 		if error {
 			return "", errors.New("error due to bug in code")
 		}

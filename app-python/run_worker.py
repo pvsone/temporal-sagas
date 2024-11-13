@@ -7,6 +7,7 @@ from activities import (
     book_car,
     book_flight,
     book_hotel,
+    notify_user,
     undo_book_car,
     undo_book_flight,
     undo_book_hotel,
@@ -28,6 +29,7 @@ async def main():
             undo_book_car,
             undo_book_hotel,
             undo_book_flight,
+            notify_user,
         ],
     )
     await worker.run()

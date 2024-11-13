@@ -1,12 +1,11 @@
-# Sagas
-
-Sagas are a protocol for implementing long-running processes. The Saga protocol ensures that a process is atomic, that is, a process executes observably equivalent to completely or not at all.
+# Temporal Trip Booking
 
 ## Overview
 
-The booking saga workflow is responsible for coordinating the booking of a vacation package, consisting of a car, hotel, and flight reservation. In the event of a failure at any point during the booking process, the workflow will trigger compensating actions to undo any previous bookings.
-
-![](static/booking-saga.png)
+The Temporal trip booking workflow is responsible for coordinating the booking of a vacation package, consisting of a car, hotel, and flight
+reservation. In the event of a failure at any point during the booking process, the workflow will trigger compensating actions to undo any
+previous bookings. This is an implementation of a Saga pattern. A Saga ensures that a business process is atomic, that is, it executes observably
+equivalent to completely or not at all.
 
 ## Running
 
@@ -26,49 +25,24 @@ That loads all required dependencies.
 Then run the worker and workflow.
 
 ```bash
-poetry run python run_worker.py
-poetry run python run_workflow.py
+cd app-python
+./start_worker.sh
+
+cd ui
+./start_ui.sh
 ```
 
 ### Demo: Happy Path
 Enter your booking information in the Flask app <http://127.0.0.1:5000>, then see the tasks in the Web UI at <http://localhost:8233/>.
 
-Select your running or completed Workflow ID.
-
-Under **WorkflowExecutionCompleted** car, hotel and flight are booked.
-
-Notice each is executed via an activity.
+### Demo: Durable Path
+Use ctrl+c to kill the worker process at any time during workflow execution.  Restart the worker to resume the function execution in a new process.
 
 ### Demo: Recover Forward (retries)
+Add the word "Flaky" to the Car input field.  The car booking activity will fail 5 times, and succeed on the 6th attempt.
 
-Modify `Attempts = 1` to `Attempts = 3` in UI, so that the booking activities attempt a retry 3 times.
-Render your booking information in the Flask app <http://127.0.0.1:5000>, then see the tasks in the Web UI at <http://localhost:8233/>.
-
-Select your running or completed Workflow ID.
-
-Under **Recent** events, select the failed Activity, `book_flight` (in compact view).
-
-Under **ActivityTaskStarted** you'll see the Attempts (3), and the stack trace message letting you know the last failed attempt.
-
-Then notice how the Workflow executes the compensations.
+### Demo: Recover Forward (bug in code)
+Add the word "Buggy" to the Hotel input field.  The hotel booking activity will fail indefinitely - until the bug in the activity function is fixed, and the worker is restarted.
 
 ### Demo: Recover Backward (rollback)
-
-Modify `Flight = Alaska Airlines 123` to `Flight = invalid` in the UI, so that the `book_flight` Activity fails and a rollback occurs. 
-Render your booking information in the Flask app <http://127.0.0.1:5000>, then see the tasks in the Web UI at <http://localhost:8233/>.
-
-Select your running or completed Workflow ID.
-
-Under **Recent** events, select the failed Activity, `book_flight` (in compact view).
-
-Under **ActivityTaskStarted** you'll see the Attempts (5), and the stack trace message letting you know the last failed attempt.
-
-Under **ActivityTaskFailed** you'll see error `Invalid flight booking, rolling back!`. You will also see that since the booking cannot be completed, rollback (undo) is performed using compensation.
-
-## Design
-
-The booking saga is implemented using the Temporal Workflow framework, which provides a robust and fault-tolerant platform for coordinating distributed transactions.
-
-The saga workflow consists of three activities: `book_car()`, `book_hotel)()`, and `book_flight)()`, each of which is responsible for making a reservation with the corresponding service provider. If any of these activities fail, the workflow will trigger the corresponding compensating action (`undo_book_car()`, `undo_book_hotel()`, or `undo_book_flight()`) to undo any previous bookings.
-
-The `non_retryable_error_types` parameter is used to specify a list of error types that should not be retried when a Workflow or Activity fails.
+Add the word "Invalid" to the Flight input field.  The flight booking activity will fail with and non-retryable error, and the hotel and car bookings will be rolled back.
